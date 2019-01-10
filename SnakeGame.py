@@ -1,5 +1,32 @@
 #该模块调用到的其它函数由其他同学进行编写
 class SnakeGame(Frame):
+    def key_release(self, event):    #定义一个key_release()方法，用于监听键盘事件
+        key = event.keysym     #获取一个键盘事件
+        key_dict = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}   #定义一个字典，后续进行蛇是否向自己的反方向走进行判断
+        #蛇不可以向自己的反方向走
+        if key in key_dict and not key == key_dict[self.snake.direction]:   #判断蛇是否是向自己的反方向走，如果不是则蛇前进
+            self.snake.direction = key
+            self.move()
+        elif key == 'p':
+            self.status.reverse()
+
+    def run(self):   #定义一个run()方法判断游戏进程
+        #首先判断游戏是否暂停
+        if not self.status[0] == 'stop':
+            #判断游戏是否结束   
+            if self.gameover == True:  #如果游戏结束，则显示界面Game Over,your score是多少分
+                message = tkinter.messagebox.showinfo("Game Over", "your score: %d" % self.score)
+                if message == 'ok':   #点击确定按钮，则调用initial函数游戏重新开始，初始化游戏。
+                    self.initial()
+            if self.food.type == 4:    #判断食物类型是否为4,是的话执行以下操作，令变色食物闪烁
+                color = self.color_c[self.i]   
+                self.i = (self.i+1)%10
+                self.food.color = color
+                self.food.display()
+                self.move(color)
+            else:    #如果游戏不结束、食物类型不为4，调用move()方法
+                self.move()
+        self.after(self.speed, self.run)   #调用after()方法改变蛇行进速度和游戏进程
     def move(self, color="#EE82EE"):
     # 计算蛇下一次移动的点
     head = self.snake.body[0]
