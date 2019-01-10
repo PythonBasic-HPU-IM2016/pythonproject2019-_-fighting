@@ -9,7 +9,49 @@ class SnakeGame(Frame):
             self.move()
         elif key == 'p':
             self.status.reverse()
+    #这个方法用于游戏重新开始时初始化游戏
+    def initial(self):  #定义一个initial()方法，用于游戏重新开始进行游戏
+        self.gameover = False   #初始化游戏结束时游戏重新开始初始的状态
+        self.score = 0   #初始化游戏结束时游戏重新开始初始时游戏的得分
+        self.m.set("Score:"+str(self.score))
+        self.snake.initial()    #调用上面的initial()方法回到游戏重新开始时蛇的状态
 
+    #type1:普通食物  type2:减少2  type3:回到最初状态  type4:吃了会变色
+    def display_food(self):   #定义display_food()，用于显示食物的颜色、位置和类型
+        self.food.color = "#23D978"   #初始化食物的颜色为绿色
+        self.food.type = 1   #初始化食物的类型为第一个类型
+        if randint(0, 20) == 5:     #判断出现的（0,20）范围内出现随机数是否为5，对随机数为5的数字设置其食物颜色和类型
+            self.food.color = "#FFD700"     
+            self.food.type = 3
+            while (self.food.pos in self.snake.body):    #判断蛇是否吃到食物，若吃到食物，该类食物随机出现
+                self.food.set_pos()
+            self.food.display()
+        elif randint(0, 10) == 2:    #判断出现的（0,10）范围内出现随机数是否为2，对随机数为2的数字设置其食物颜色和类型
+            self.food.color = "#EE82EE"
+            self.food.type = 4
+            while (self.food.pos in self.snake.body):   #判断蛇是否吃到食物，若吃到食物，该类食物随机出现
+                self.food.set_pos()
+            self.food.display()
+        elif len(self.snake.body) > 10 and randint(0, 16) == 8:    #当蛇的长度>10个格子，且随机数为（0,16）设置其食物颜色和类型
+            self.food.color = "#BC8F8F"
+            self.food.type = 2
+            while (self.food.pos in self.snake.body):   #判断蛇是否吃到食物，若吃到食物，该类食物随机出现
+                self.food.set_pos()
+            self.food.display()
+        else:      #若以上均不满足，当蛇吃到食物时，新食物随机出现
+            while (self.food.pos in self.snake.body):  
+                self.food.set_pos()
+            self.food.display()
+
+    def key_release(self, event):    #定义一个key_release()方法，用于监听键盘事件
+        key = event.keysym     #获取一个键盘事件
+        key_dict = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}   #定义一个字典，后续进行蛇是否向自己的反方向走进行判断
+        #蛇不可以向自己的反方向走
+        if key in key_dict and not key == key_dict[self.snake.direction]:   #判断蛇是否是向自己的反方向走，如果不是则蛇前进
+            self.snake.direction = key
+            self.move()
+        elif key == 'p':
+            self.status.reverse()
     def run(self):   #定义一个run()方法判断游戏进程
         #首先判断游戏是否暂停
         if not self.status[0] == 'stop':
