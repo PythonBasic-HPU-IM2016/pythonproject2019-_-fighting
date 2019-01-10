@@ -3,7 +3,7 @@ from tkinter import *            #导入tkinter库，为python的内置库，导
 from random import randint       #导入random模块中的randint函数，用于生成随机整数
 import tkinter.messagebox        #导入弹窗库，用于信息提示
 
-class Grid(object):
+class Grid(object):     
 #使用class类的继承，实现代码的重用，Grid为通过继承创建的新类（子类或派生类），object为被继承的类（基类、父类或超类）
     def __init__(self, master=None, height=16, width=24, offset=10, grid_width=48, grid_height=50, bg="#808080"):
     #__init__()方法,被称为类的构造函数或初始化方法，当创建了类的实例时就会调用该方法
