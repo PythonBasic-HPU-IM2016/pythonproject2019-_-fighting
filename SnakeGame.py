@@ -1,3 +1,4 @@
+#该模块调用到的其它函数由其他同学进行编写
 class SnakeGame(Frame):
     def move(self, color="#EE82EE"):
     # 计算蛇下一次移动的点
