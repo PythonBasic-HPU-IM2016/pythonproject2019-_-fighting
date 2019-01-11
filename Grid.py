@@ -1,10 +1,9 @@
+from tkinter import *       #导入tkinter库，是python的内置库，导入即可使用
+from random import randint  #导入random模块中的randint函数，用于生成随机整数
+import tkinter.messagebox   #导入弹窗库，用于信息提示
 
-from tkinter import *            #导入tkinter库，为python的内置库，导入即可使用 
-from random import randint       #导入random模块中的randint函数，用于生成随机整数
-import tkinter.messagebox        #导入弹窗库，用于信息提示
-
-class Grid(object):     
-#初始化函数，__init__()方法,被称为类的构造函数或初始化方法，当创建了类的实例时就会调用该方法
+class Grid(object):   #定义一个网格（Gird）类，用于设置游戏总界面，蛇轨迹绘画等
+    #初始化函数，__init__()方法,被称为类的构造函数或初始化方法，当创建了类的实例时就会调用该方法
     def __init__(self, master=None,height=16, width=24, offset=10, grid_width=30, grid_height=30,bg="#B0E2FF"):   #采用__init__()构造方法初始化Gird类的宽和高、背景颜色(浅蓝)
         self.height = height    #把参数height赋值给对象变量height，值为16，用于设置canvas纵坐标中网格的个数
         self.width = width      #把参数width 赋值给对象变量width ，值为24，用于设置canvas横坐标中网格的个数
