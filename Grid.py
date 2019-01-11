@@ -20,5 +20,6 @@ class Grid(object):   #定义一个网格（Gird）类，用于设置游戏总�
         x = pos[0] * self.grid_width + self.offset
         y = pos[1] * self.grid_width + self.offset
         #outline属性要与网格的背景色（self.bg）相同，更加美观
-        #self.canvas.create_oval(x, y, x + self.grid_width, y + self.grid_width, fill=color, outline=self.bg)
+        self.canvas.create_oval(x, y, x + self.grid_width, y + self.grid_width, fill=color, outline=self.bg)
         #绘制一个圆形((a,b,c,d),值为左上角和右下角的坐标)，路径及小蛇、实物的形状，轮廓outline属性设置为网格的背景色
+        
