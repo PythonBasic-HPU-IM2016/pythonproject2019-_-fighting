@@ -1,3 +1,4 @@
+#完整文件
 from tkinter import *       #导入tkinter库，是python的内置库，导入即可使用
 from random import randint  #导入random模块中的randint函数，用于生成随机整数
 import tkinter.messagebox   #导入弹窗库，用于信息提示
