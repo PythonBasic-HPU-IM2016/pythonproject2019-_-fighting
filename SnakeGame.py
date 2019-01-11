@@ -1,14 +1,25 @@
 #该模块调用到的其它函数由其他同学进行编写
 class SnakeGame(Frame):
-    def key_release(self, event):    #定义一个key_release()方法，用于监听键盘事件
-        key = event.keysym     #获取一个键盘事件
-        key_dict = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}   #定义一个字典，后续进行蛇是否向自己的反方向走进行判断
-        #蛇不可以向自己的反方向走
-        if key in key_dict and not key == key_dict[self.snake.direction]:   #判断蛇是否是向自己的反方向走，如果不是则蛇前进
-            self.snake.direction = key
-            self.move()
-        elif key == 'p':
-            self.status.reverse()
+    def __init__(self, master):       #采用__init__()构造方法对SnakeGame进行初始化
+        Frame.__init__(self, master)  #调用用__init__()构造方法对框架进行初始化
+        self.grid = Grid(master)     
+        self.snake = Snake(self.grid)
+        self.food = Food(self.grid)
+        self.gameover = False   #设置游戏结束的初始状态为False
+        self.score = 0      #设置游戏的初始得分为0
+        self.status = ['run', 'stop']    #设置蛇的状态有run和stop
+        self.speed = 300   #设置蛇的初始速度为300
+        self.grid.canvas.bind_all("<KeyRelease>", self.key_release)
+        self.display_food()    #初始化食物的显示颜色
+        #用于设置变色食物
+        self.color_c = ("#FFB6C1","#6A5ACD","#0000FF","#F0FFF0","#FFFFE0","#F0F8FF","#EE82EE","#000000","#5FA8D9","#32CD32")
+        self.i = 0   
+        #界面左侧显示分数   
+        self.m = StringVar()
+        self.ft1 = ('Fixdsys', 40, "bold")
+        self.m1 = Message(master, textvariable=self.m, aspect=5000, font=self.ft1, bg="#FFB5C5")
+        self.m1.pack(side=LEFT, fill=Y)
+        self.m.set("Score:"+str(self.score))
     #这个方法用于游戏重新开始时初始化游戏
     def initial(self):  #定义一个initial()方法，用于游戏重新开始进行游戏
         self.gameover = False   #初始化游戏结束时游戏重新开始初始的状态
